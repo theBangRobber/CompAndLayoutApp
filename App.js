@@ -6,8 +6,10 @@ import {
   Pressable,
   Alert,
   StyleSheet,
+  SafeAreaView,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
+// import { RadioGroup } from "react-native-radio-buttons-group";
 
 export default function App() {
   const [name, setName] = useState("");
@@ -32,8 +34,8 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      {/* Name Input */}
+    <SafeAreaView style={styles.container}>
+      {/* NAME INPUT */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Your Name:</Text>
         <TextInput
@@ -44,7 +46,7 @@ export default function App() {
         />
       </View>
 
-      {/* Age Input */}
+      {/* AGE INPUT */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Your Age:</Text>
         <TextInput
@@ -59,50 +61,43 @@ export default function App() {
       {/* COFFEE PREFERENCE */}
       <View style={styles.radioContainer}>
         <Text style={styles.label}>Like Coffee?</Text>
-        <View style={styles.radioGroup}>
-          <RadioButton
-            value="yes"
-            status={
-              coffeePreference === "yes" ? "checked" : "unchecked"
-            }
-            onPress={() => setCoffeePreference("yes")}
-          />
-          <Text>Yes</Text>
-
-          <RadioButton
-            value="no"
-            status={
-              coffeePreference === "no" ? "checked" : "unchecked"
-            }
-            onPress={() => setCoffeePreference("no")}
-          />
-          <Text>No</Text>
-        </View>
+        <RadioButton.Group
+          onValueChange={(value) => setCoffeePreference(value)}
+          value={coffeePreference}
+        >
+          <View style={styles.radioGroup}>
+            <RadioButton value="yes" styles={styles.radioButton} />
+            <Text>Yes</Text>
+            <RadioButton value="no" styles={styles.radioButton} />
+            <Text>No</Text>
+          </View>
+        </RadioButton.Group>
       </View>
 
       {/* SUBMIT BUTTON */}
       <Pressable style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Submit</Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   );
 }
 
-// Styles
+// STYLES
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 70,
     backgroundColor: "#ADD8E6",
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginRight: 12,
     marginBottom: 10,
   },
   label: {
     width: 100,
     fontSize: 15,
+    marginLeft: 12,
   },
   input: {
     borderWidth: 1,
@@ -114,20 +109,22 @@ const styles = StyleSheet.create({
   radioContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   radioGroup: {
     flexDirection: "row",
     alignItems: "center",
   },
+  radioButton: {},
   button: {
     backgroundColor: "white",
+    margin: 10,
     padding: 10,
     borderWidth: 1,
     borderColor: "black",
     alignItems: "center",
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 15,
   },
 });
